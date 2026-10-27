@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMS Julylam - Giải Pháp Quản Lý Kho Thông Minh</title>
+    <meta name="description" content="Hệ thống quản lý kho WMS chạy Local/LAN, bảo mật tuyệt đối, tích hợp trợ lý AI. Giải pháp tối ưu chi phí cho doanh nghiệp vừa và nhỏ.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0ea5e9; /* Màu xanh giống Logo */
+            --primary-dark: #0284c7;
+            --secondary: #0f172a;
+            --accent: #10b981;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { color: var(--text-main); background-color: var(--white); line-height: 1.6; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        ul { list-style: none; }
+
+        /* HEADER */
+        header {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 5%;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo img { height: 50px; object-fit: contain; }
+        nav ul { display: flex; gap: 30px; }
+        nav a { font-weight: 600; color: var(--secondary); transition: color 0.3s; }
+        nav a:hover { color: var(--primary); }
+        .btn-header { background: var(--primary); color: var(--white); padding: 10px 24px; border-radius: 8px; font-weight: 600; transition: all 0.3s; border: 2px solid var(--primary); }
+        .btn-header:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+
+        /* HERO SECTION */
+        .hero { padding: 140px 5% 80px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); display: flex; align-items: center; justify-content: space-between; gap: 50px; }
+        .hero-content { flex: 1; max-width: 550px; }
+        .hero-badge { background: #bae6fd; color: #0369a1; padding: 6px 16px; border-radius: 50px; font-size: 14px; font-weight: 700; display: inline-block; margin-bottom: 20px; }
+        .hero h1 { font-size: 46px; line-height: 1.2; color: var(--secondary); margin-bottom: 20px; font-weight: 800; }
+        .hero p { font-size: 18px; color: var(--text-light); margin-bottom: 35px; }
+        .hero-buttons { display: flex; gap: 15px; }
+        .btn-primary, .btn-secondary { padding: 14px 28px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-align: center; }
+        .btn-primary { background: var(--primary); color: var(--white); border: none; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: var(--secondary); border: 2px solid var(--secondary); }
+        .btn-secondary:hover { background: var(--secondary); color: var(--white); }
+        
+        .hero-image { flex: 1.2; position: relative; }
+        .hero-image img { width: 100%; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 4px solid var(--white); display: block; }
+
+        /* STATS */
+        .stats { display: flex; justify-content: space-around; padding: 40px 5%; background: var(--white); box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; z-index: 10; border-radius: 15px; max-width: 90%; margin: -40px auto 0; }
+        .stat-item { text-align: center; }
+        .stat-item h3 { font-size: 32px; color: var(--primary); font-weight: 800; }
+        .stat-item p { color: var(--text-light); font-weight: 600; }
+
+        /* FEATURES */
+        .features { padding: 100px 5%; background: var(--bg-light); text-align: center; }
+        .section-title { font-size: 36px; color: var(--secondary); margin-bottom: 15px; font-weight: 800; }
+        .section-subtitle { color: var(--text-light); margin-bottom: 60px; font-size: 18px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .feature-card { background: var(--white); padding: 40px 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: all 0.3s; text-align: left; border: 1px solid #e2e8f0; }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(14, 165, 233, 0.1); border-color: #bae6fd; }
+        .feature-icon { width: 60px; height: 60px; background: #e0f2fe; color: var(--primary-dark); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
+        .feature-card h3 { font-size: 20px; color: var(--secondary); margin-bottom: 15px; }
+        .feature-card p { color: var(--text-light); font-size: 15px; }
+
+        /* GALLERY (ẢNH GIAO DIỆN) */
+        .gallery { padding: 80px 5%; text-align: center; background: var(--white); }
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; align-items: center; }
+        .gallery-item img { width: 100%; border-radius: 12px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; transition: transform 0.3s; }
+        .gallery-item img:hover { transform: scale(1.02); }
+        .gallery-item h4 { margin-top: 15px; color: var(--secondary); font-size: 18px; }
+
+        /* VIDEO SECTION */
+        .video-section { padding: 80px 5%; text-align: center; background: var(--bg-light); }
+        .video-container { max-width: 900px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); position: relative; padding-bottom: 50.6%; height: 0; background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* CTA SECTION */
+        .cta { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 80px 5%; text-align: center; color: var(--white); }
+        .cta h2 { font-size: 36px; margin-bottom: 20px; font-weight: 800; }
+        .cta p { font-size: 18px; margin-bottom: 40px; opacity: 0.9; }
+        .cta .btn-primary { background: var(--white); color: var(--primary); border: 2px solid var(--white); }
+        .cta .btn-primary:hover { background: transparent; color: var(--white); }
+
+        /* FOOTER */
+        footer { background: var(--secondary); color: #94a3b8; padding: 60px 5% 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+        .footer-col h4 { color: var(--white); margin-bottom: 20px; font-size: 18px; }
+        .footer-col p { margin-bottom: 10px; }
+        .footer-col a:hover { color: var(--primary); }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid #334155; font-size: 14px; }
+
+        /* MODAL (CHÍNH SÁCH BẢO MẬT / ĐIỀU KHOẢN) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: var(--white); max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 40px; border-radius: 15px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; animation: modalFadeIn 0.3s; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-light); transition: color 0.3s; }
+        .close-btn:hover { color: #ef4444; }
+        .modal-content h2 { color: var(--secondary); margin-bottom: 20px; font-size: 28px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        .modal-content h3 { color: var(--primary-dark); margin: 20px 0 10px; font-size: 20px; }
+        .modal-content p, .modal-content li { margin-bottom: 10px; font-size: 15px; color: var(--text-main); }
+        .modal-content ul { padding-left: 20px; list-style-type: disc; }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .hero { flex-direction: column; padding-top: 120px; text-align: center; }
+            .hero-content { max-width: 100%; }
+            .hero-buttons { justify-content: center; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav ul { display: none; }
+            .hero h1 { font-size: 36px; }
+            .stats { flex-direction: column; gap: 30px; margin-top: 20px; }
+            .modal-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <!-- ĐÃ NHÚNG LOGO CỦA ANH -->
+            <img src="logo.png" alt="WMS Julylam Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Tính năng</a></li>
+                <li><a href="#gallery">Giao diện</a></li>
+                <li><a href="#video">Video Demo</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+        </nav>
+        <a href="#contact" class="btn-header">Dùng thử miễn phí</a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Giải pháp tối ưu cho Doanh nghiệp vừa & nhỏ</span>
+            <h1>Quản Lý Kho Thông Minh, <br><span style="color: var(--primary);">Bứt Phá Doanh Thu</span></h1>
+            <p>Hệ thống WMS chạy trực tiếp trên máy chủ nội bộ (LAN/Offline). Bảo mật tuyệt đối, không tốn phí thuê Cloud hàng tháng, tích hợp Trợ lý AI tự động hóa quy trình kho.</p>
+            <div class="hero-buttons">
+                <a href="#video" class="btn-primary"><i class="fa-solid fa-play"></i> Xem Demo</a>
+                <a href="#contact" class="btn-secondary">Nhận Báo Giá</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <!-- ĐÃ NHÚNG ẢNH GIAO DIỆN TỔNG QUAN KHO -->
+            <img src="dashboard-screen.jpg" alt="Giao diện Tổng quan Kho WMS">
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-item">
+            <h3>100%</h3>
+            <p>Dữ liệu bảo mật tại Local</p>
+        </div>
+        <div class="stat-item">
+            <h3>0 Đồng</h3>
+            <p>Phí thuê Server hàng tháng</p>
+        </div>
+        <div class="stat-item">
+            <h3>AI</h3>
+            <p>Tích hợp Trợ lý ảo thông minh</p>
+        </div>
+        <div class="stat-item">
+            <h3>1 Click</h3>
+            <p>Cài đặt & Sử dụng ngay</p>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+        <h2 class="section-title">Tính Năng Vượt Trội</h2>
+        <p class="section-subtitle">Mọi thứ doanh nghiệp cần để quản lý kho bãi chuyên nghiệp</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+                <h3>Quản Lý Tồn Kho Realtime</h3>
+                <p>Theo dõi số lượng nhập, xuất, tồn theo thời gian thực. Cảnh báo màu sắc (An toàn, Sắp hết, Đã hết) trực quan.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-code-branch"></i></div>
+                <h3>Truy Xuất Nguồn Gốc (Lot/Batch)</h3>
+                <p>Quản lý chi tiết theo số lô, hạn sử dụng (FEFO). Dễ dàng truy xuất lịch sử lô hàng khi có sự cố.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Trợ Lý AI Đắc Lực</h3>
+                <p>Tích hợp AI (DeepSeek/Gemini) giúp tra cứu số liệu bằng tiếng Việt tự nhiên. VD: "Có bao nhiêu mã sắp hết hàng?".</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-check-double"></i></div>
+                <h3>Quy Trình Duyệt Khép Kín</h3>
+                <p>Kiểm soát chặt chẽ từ Đơn xin vật tư, PO mua hàng đến Xuất kho. Phân quyền rõ ràng cho từng bộ phận.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-file-excel"></i></div>
+                <h3>Import / Export Excel</h3>
+                <p>Hỗ trợ nhập liệu hàng loạt bằng file Excel. Xuất báo cáo Nhập - Xuất - Tồn, Thẻ kho cực nhanh chỉ với 1 click.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Cài Đặt Portable, Bảo Mật</h3>
+                <p>Chạy độc lập bằng Node.js + PostgreSQL Portable. Không cần Internet, dữ liệu không bao giờ rời khỏi máy tính.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY (ẢNH GIAO DIỆN ĐĂNG NHẬP) -->
+    <section class="gallery" id="gallery">
+        <h2 class="section-title">Giao Diện Thân Thiện, Dễ Sử Dụng</h2>
+        <p class="section-subtitle">Thiết kế hiện đại, hỗ trợ đa ngôn ngữ (Việt - Anh - Trung)</p>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <!-- ĐÃ NHÚNG ẢNH ĐĂNG NHẬP -->
+                <img src="login-screen.jpg" alt="Màn hình Đăng nhập WMS">
+                <h4>Màn hình Đăng nhập & Chọn Kho làm việc</h4>
+            </div>
+            <div class="gallery-item">
+                <!-- ĐÃ NHÚNG ẢNH GIAO DIỆN KHO -->
+                <img src="dashboard-screen.jpg" alt="Giao diện Quản lý kho WMS">
+                <h4>Màn hình Tổng quan & Cảnh báo Tồn kho Realtime</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO SECTION -->
+    <section class="video-section" id="video">
+        <h2 class="section-title">Video Demo Hoạt Động Thực Tế</h2>
+        <p class="section-subtitle">Xem quy trình xuất nhập kho và sức mạnh của Trợ lý AI</p>
+        <div class="video-container">
+            <!-- THAY LINK YOUTUBE THỰC TẾ VÀO ĐÂY -->
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&rel=0" title="WMS Demo Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- CTA / LIÊN HỆ -->
+    <section class="cta" id="contact">
+        <h2>Sẵn Sàng Nâng Cấp Quản Lý Kho?</h2>
+        <p>Liên hệ ngay hôm nay để nhận tư vấn và trải nghiệm bản Demo miễn phí.</p>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <a href="tel:+84988901793" class="btn-primary" style="padding: 15px 40px; font-size: 18px;">
+                <i class="fa-solid fa-phone"></i> Gọi Ngay: 0988.901.793
+            </a>
+            <a href="mailto:lamthangbay@gmail.com" class="btn-primary" style="padding: 15px 40px; font-size: 18px;">
+                <i class="fa-solid fa-envelope"></i> Gửi Email
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="logo.png" alt="WMS Logo" style="height: 40px; margin-bottom: 15px; background: white; padding: 5px; border-radius: 5px;">
+                <p>CÔNG TY TNHH LTB</p>
+                <p>Địa chỉ: Xã Tam Đảo, tỉnh Phú Thọ</p>
+                <p>Hotline: 0988.901.793</p>
+                <p>Email: lamthangbay@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Về Phần Mềm</h4>
+                <p><a href="#features">Tính năng WMS</a></p>
+                <p><a href="#video">Video hướng dẫn</a></p>
+                <p>Phiên bản: 1.0.0 (2026)</p>
+            </div>
+            <div class="footer-col">
+                <h4>Pháp Lý & Hỗ Trợ</h4>
+                <p><a onclick="openModal('modal-privacy')">Chính sách bảo mật</a></p>
+                <p><a onclick="openModal('modal-terms')">Điều khoản sử dụng</a></p>
+                <p>Hỗ trợ kỹ thuật 24/7</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 WMS Julylam. Designed by Lam Tháng Bảy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL: CHÍNH SÁCH BẢO MẬT -->
+    <div id="modal-privacy" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-privacy')">&times;</span>
+            <h2>Chính Sách Bảo Mật</h2>
+            <p><strong>Cập nhật lần cuối:</strong> Tháng 10 năm 2026</p>
+            <p>Phần mềm WMS Julylam được phát triển bởi Công ty TNHH LTB với tiêu chí <strong>"Bảo mật dữ liệu là ưu tiên hàng đầu"</strong>. Chúng tôi cam kết bảo vệ dữ liệu của doanh nghiệp bạn theo các điều khoản sau:</p>
+            
+            <h3>1. Lưu trữ dữ liệu (Local Storage)</h3>
+            <p>Khác với các phần mềm Cloud (SaaS) thông thường, WMS Julylam được thiết kế để chạy trực tiếp trên máy chủ nội bộ (Local Server) của doanh nghiệp bạn. Toàn bộ dữ liệu (thông tin vật tư, kho bãi, giao dịch) <strong>chỉ được lưu trữ trong cơ sở dữ liệu PostgreSQL trên máy tính của bạn</strong>. Chúng tôi không có bất kỳ máy chủ nào để thu thập hay sao chép dữ liệu của bạn.</p>
+            
+            <h3>2. Bảo mật thông tin</h3>
+            <p>Hệ thống áp dụng các tiêu chuẩn bảo mật nghiêm ngặt:</p>
+            <ul>
+                <li>Mật khẩu người dùng được mã hóa một chiều bằng thuật toán Scrypt.</li>
+                <li>Phân quyền chi tiết theo vai trò (Admin, Lãnh đạo, Thủ kho, Sale...).</li>
+                <li>Dữ liệu được sao lưu (Backup) tự động hàng ngày theo cấu hình của bạn, đảm bảo không mất mát khi có sự cố phần cứng.</li>
+            </ul>
+
+            <h3>3. Trí tuệ nhân tạo (AI) và Dữ liệu</h3>
+            <p>Phần mềm có tích hợp tính năng Trợ lý AI. Khi bạn đặt câu hỏi, hệ thống sẽ tự động ẩn danh (sanitize) các thông tin nhạy cảm (tên khách hàng, giá cả, mã PO) trước khi gửi ngữ cảnh lên nhà cung cấp AI (như Google Gemini, DeepSeek) để lấy câu trả lời. Dữ liệu cốt lõi của bạn không bao giờ bị chia sẻ nguyên bản cho bên thứ ba.</p>
+            
+            <h3>4. Chia sẻ với bên thứ ba</h3>
+            <p>Chúng tôi cam kết <strong>không bán, không trao đổi hay chuyển giao</strong> thông tin của bạn cho bất kỳ bên thứ ba nào. Kỹ thuật viên của chúng tôi chỉ truy cập vào máy chủ của bạn khi có sự đồng ý trực tiếp từ bạn (thông qua Ultraviewer/Teamviewer) để hỗ trợ kỹ thuật.</p>
+        </div>
+    </div>
+
+    <!-- MODAL: ĐIỀU KHOẢN SỬ DỤNG -->
+    <div id="modal-terms" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-terms')">&times;</span>
+            <h2>Điều Khoản Sử Dụng</h2>
+            <p><strong>Cập nhật lần cuối:</strong> Tháng 10 năm 2026</p>
+            <p>Khi cài đặt và sử dụng phần mềm WMS Julylam, bạn đồng ý với các điều khoản sau đây:</p>
+
+            <h3>1. Bản quyền phần mềm</h3>
+            <p>Phần mềm được cấp phép sử dụng vĩnh viễn (Perpetual License) cho doanh nghiệp mua bản quyền. Bạn có quyền cài đặt không giới hạn số lượng máy tính kết nối vào cùng một máy chủ nội bộ (LAN) của doanh nghiệp mình. Bạn không được phép bán lại, cho thuê hoặc phân phối lại mã nguồn cho bên thứ ba.</p>
+
+            <h3>2. Trách nhiệm dữ liệu</h3>
+            <p>Vì phần mềm chạy trên máy chủ của bạn, trách nhiệm sao lưu (Backup) dữ liệu thuộc về doanh nghiệp của bạn. Chúng tôi khuyến nghị sử dụng tính năng Backup tự động của phần mềm và đặt thư mục Backup ở một ổ cứng khác hoặc sao lưu lên Google Drive. Công ty TNHH LTB không chịu trách nhiệm cho các trường hợp mất dữ liệu do hỏng ổ cứng, virus hoặc do người dùng xóa nhầm.</p>
+
+            <h3>3. Hỗ trợ kỹ thuật</h3>
+            <p>Trong vòng 12 tháng kể từ ngày mua (hoặc theo hợp đồng cụ thể), khách hàng được hỗ trợ kỹ thuật miễn phí qua Hotline, Zalo và Ultraviewer để khắc phục các lỗi phát sinh từ phía phần mềm. Các yêu cầu thay đổi thiết kế, thêm tính năng mới (Customization) sẽ được báo giá riêng.</p>
+
+            <h3>4. Cập nhật phiên bản</h3>
+            <p>Chúng tôi liên tục cập nhật các bản vá lỗi (Bug fixes) và cải tiến tính năng. Khách hàng sẽ nhận được thông báo và file cài đặt cập nhật miễn phí trong thời gian hỗ trợ.</p>
+
+            <h3>5. Giới hạn trách nhiệm</h3>
+            <p>Phần mềm được cung cấp "nguyên trạng". Công ty TNHH LTB không chịu trách nhiệm cho bất kỳ thiệt hại gián tiếp nào (mất lợi nhuận, mất cơ hội kinh doanh) phát sinh từ việc sử dụng phần mềm, trừ khi có thỏa thuận khác bằng văn bản.</p>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Modal Functions
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Ngăn cuộn trang khi mở modal
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Cho phép cuộn lại
+        }
+
+        // Đóng modal khi click ra ngoài
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>
